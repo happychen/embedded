@@ -1,0 +1,19 @@
+#定义变量
+CFLAG = -Wall -c -fPIC
+LDFLAG = -shared
+#src = a.c b.c c.c
+src = $(wildcard *.c)
+#obj = a.o b.o c.o
+CC = gcc
+target = libstack.so
+#把.c换陈.o
+obj = $(patsubst %.c, %.o, $(src))
+
+all:$(obj)
+		$(CC) $(obj) $(LDFLAG) -o $(target) 
+%.o:%.c
+		gcc $(CFLAG) -o $@ $<
+.PHONY:clean
+clean:
+		rm -f *.o
+		rm -f *.so
